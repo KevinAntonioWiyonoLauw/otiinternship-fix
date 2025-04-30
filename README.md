@@ -4,10 +4,13 @@
 
 ## 😎 Anggota
 - Christiano Jose Intoro (Frontend)
-- Fahmi Abdillah Zain (Sekretaris & Project Manager)
+- Fahmi Abdillah Zain (Sekretaris & UI/UX)
 - Kevin Antonio Wiyono Lauw (Backend)
-- Thomas Nadandra Aryawida (UI/UX)
+- Thomas Nadandra Aryawida (Project Manager)
 - Widad Muhammad Rafi (UI/UX)
+
+## 🎭 Case
+Human Development (HD)
 
 ## 📌 Overview
 
@@ -94,6 +97,14 @@ The application is built using a modern microservices architecture with the foll
    - Frontend: http://localhost:3000
    - API Gateway: http://localhost:8000
 
+5. **Logging into the Application**
+   - Kadiv HD account:
+      - Email: admin@gmail.com
+      - Password: admin123
+   - Staff account:
+      - Email: staff@gmail.com
+      - Password: staff123
+
 ## 🔧 Development Setup
 
 ### Running Services Individually
@@ -122,20 +133,6 @@ or
 - **API Gateway**: `http://localhost:8000/api/{{serviceName}}`
 
 Health check endpoints are available for all services at `/health`.
-
-## 🧪 Testing
-
-Run tests with:
-
-```bash
-npm test
-```
-
-For Storybook component tests:
-
-```bash
-npm run test:storybook
-```
 
 ## 📊 Monitoring
 
