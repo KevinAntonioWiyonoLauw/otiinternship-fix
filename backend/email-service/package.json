@@ -1,0 +1,36 @@
+{
+  "name": "email-service",
+  "version": "1.0.0",
+  "description": "Email service for OTI Microservices Architecture",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js",
+    "dev": "nodemon main.js",
+    "test": "echo \"No tests specified\" && exit 0"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.5.0",
+    "axios": "^1.8.4",
+    "bcryptjs": "^3.0.2",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dompurify": "^3.2.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.21.2",
+    "helmet": "^8.1.0",
+    "joi": "^17.5.0",
+    "jsdom": "^26.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "mailersend": "^2.5.0",
+    "node-cron": "^3.0.3",
+    "nodemailer": "^6.10.1",
+    "pg": "^8.7.1",
+    "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "express-rate-limit": "^7.5.0",
+    "nodemon": "^2.0.22",
+    "prisma": "^6.5.0"
+  }
+}

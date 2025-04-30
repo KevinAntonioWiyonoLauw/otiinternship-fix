@@ -1,0 +1,23 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+model EmailLog {
+  id           Int       @id @default(autoincrement())
+  email        String
+  emailType    String    @map("email_type")
+  token        String?
+  userId       String?   @map("user_id") 
+  status       String
+  errorMessage String?   @map("error_message")
+  sentAt       DateTime  @default(now()) @map("sent_at") @db.Timestamp()
+
+  @@map("email_logs")
+  @@index([userId], name: "idx_email_logs_user_id")
+  @@index([sentAt], name: "idx_email_logs_sent_at")
+}

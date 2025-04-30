@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+model Training {
+  id          Int      @id @default(autoincrement())
+  title       String
+  date        DateTime @db.Date
+  start_time  DateTime @map("start_time") @db.Time
+  end_time    DateTime @map("end_time") @db.Time
+  location    String
+  createdBy   String   @map("created_by") @db.Uuid
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamp()
+  divisionId  Int      @map("division_id") 
+
+  participants TrainingParticipant[]
+  presences    Presence[]
+
+  @@index([createdBy], name: "idx_training_created_by")
+  @@index([date, start_time, end_time], name: "idx_training_date_time")
+  @@map("training")
+}
+
+model TrainingParticipant {
+  id          Int       @id @default(autoincrement())
+  trainingId  Int       @map("training_id")
+  userId      String    @map("user_id") @db.Uuid
+  joinedAt    DateTime  @default(now()) @map("joined_at") @db.Timestamp()
+  remindedAt  DateTime? @map("reminded_at") @db.Timestamp()
+
+  training    Training  @relation(fields: [trainingId], references: [id], onDelete: Cascade)
+
+  @@index([trainingId], name: "idx_training_participant_training_id")
+  @@index([userId], name: "idx_training_participant_user_id")
+  @@map("training_participant")
+}
+
+model Presence {
+  id           Int      @id @default(autoincrement())
+  trainingId   Int      @map("training_id")
+  userId       String   @map("user_id") @db.Uuid
+  presenceType String   @map("presence_type")
+  timestamp    DateTime @default(now()) @db.Timestamp()
+
+  training     Training @relation(fields: [trainingId], references: [id], onDelete: Cascade)
+
+  @@index([trainingId], name: "idx_presence_training_id")
+  @@index([userId], name: "idx_presence_user_id")
+  @@map("presence")
+}

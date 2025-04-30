@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+model Meeting {
+  id        Int      @id @default(autoincrement())
+  title     String
+  date      DateTime @db.Date
+  startTime DateTime @map("start_time") @db.Time
+  endTime   DateTime @map("end_time") @db.Time
+  location  String
+  joinCode  String   @unique @map("join_code")
+  createdBy String   @map("created_by") @db.Uuid
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamp()
+
+  participants MeetingParticipant[]
+
+  @@index([createdBy], name: "idx_meeting_created_by")
+  @@index([joinCode], name: "idx_meeting_join_code")
+  @@index([date, startTime, endTime], name: "idx_meeting_date_time")
+  @@map("meeting")
+}
+
+model MeetingParticipant {
+  id         Int       @id @default(autoincrement())
+  meetingId  Int       @map("meeting_id")
+  userId     String    @map("user_id") @db.Uuid
+  joinedAt   DateTime  @default(now()) @map("joined_at") @db.Timestamp()
+  remindedAt DateTime? @map("reminded_at")
+  
+  meeting    Meeting   @relation(fields: [meetingId], references: [id], onDelete: Cascade)
+
+  @@unique([meetingId, userId]) 
+  @@index([meetingId])
+  @@index([userId])
+  @@index([remindedAt])
+  @@map("meeting_participant")
+}

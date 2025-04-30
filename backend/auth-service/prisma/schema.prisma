@@ -1,0 +1,69 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+model User {
+  id                  String        @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid @map("user_id")
+  email               String        @unique
+  niu                 String        @unique
+  namaLengkap         String        @map("nama_lengkap")
+  password            String
+  resetToken          String?       @map("reset_token")
+  resetTokenExpiredAt DateTime?     @map("reset_token_expired_at") @db.Timestamp()
+  createdAt           DateTime      @default(now()) @map("created_at") @db.Timestamp()
+  updatedAt           DateTime      @default(now()) @map("updated_at") @db.Timestamp()
+  
+  userDivisions       UserDivision[]
+  refreshTokens       RefreshToken[]
+
+  @@map("users")
+  @@index([email], name: "idx_users_email")
+  @@index([niu], name: "idx_users_niu")
+}
+
+model Division {
+  id          Int           @id @default(autoincrement()) @map("division_id")
+  name        String        @unique
+  type        String
+  description String?
+  createdAt   DateTime      @default(now()) @map("created_at") @db.Timestamp()
+  
+  userDivisions UserDivision[]
+
+  @@map("divisions")
+}
+
+model UserDivision {
+  userId     String      @map("user_id") @db.Uuid
+  divisionId Int         @map("division_id")
+  role       String      
+
+  user       User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  division   Division    @relation(fields: [divisionId], references: [id], onDelete: Cascade)
+
+  @@id([userId, divisionId])
+  @@map("user_divisions")
+  @@index([userId], name: "idx_user_divisions_user_id")
+  @@index([divisionId], name: "idx_user_divisions_division_id")
+}
+
+model RefreshToken {
+  id                Int       @id @default(autoincrement()) @map("refresh_token_id")
+  userId            String    @map("user_id") @db.Uuid
+  refreshTokenValue String    @map("refresh_token_value") @unique
+  expiredAt         DateTime  @map("expired_at") @db.Timestamp()
+  createdAt         DateTime  @default(now()) @map("created_at") @db.Timestamp()
+  revoked           Boolean   @default(false)
+  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("refresh_tokens")
+  @@index([userId], name: "idx_refresh_tokens_user_id")
+  @@index([refreshTokenValue], name: "idx_refresh_tokens_refresh_token_value")
+}
+
+

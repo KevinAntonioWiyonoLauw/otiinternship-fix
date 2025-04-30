@@ -1,0 +1,22 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+model Presence {
+  id           Int      @id @default(autoincrement())
+  trainingId   Int      @map("training_id")
+  userId       String   @map("user_id") @db.Uuid
+  presenceType String   @map("presence_type") 
+  timestamp    DateTime @default(now()) @db.Timestamp()
+
+  @@unique([trainingId, userId], name: "trainingId_userId")
+  @@index([trainingId], name: "idx_presence_training_id")
+  @@index([userId], name: "idx_presence_user_id")
+  @@index([timestamp], name: "idx_presence_timestamp")
+  @@map("presence")
+}

@@ -1,0 +1,33 @@
+{
+  "name": "auth-service",
+  "version": "1.0.0",
+  "description": "Authentication service for OTI microservices",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js",
+    "dev": "nodemon main.js"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.5.0",
+    "@railway/cli": "^4.0.0",
+    "axios": "^1.8.4",
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "csv-parser": "^3.2.0",
+    "dotenv": "^16.4.7",
+    "express": "^4.20.0",
+    "express-validator": "^7.2.1",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.2",
+    "pg": "^8.14.1",
+    "railway": "^2.0.17",
+    "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "express-rate-limit": "^7.5.0",
+    "nodemon": "^3.1.9",
+    "prisma": "^6.5.0"
+  }
+}

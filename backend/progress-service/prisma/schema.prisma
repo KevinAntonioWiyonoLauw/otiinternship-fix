@@ -1,0 +1,39 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+model Participation {
+  id        Int                  @id @default(autoincrement())
+  userId    String               @map("user_id") @db.Uuid
+  eventType String               @map("event_type")
+  details   String?
+  status    ParticipationStatus
+  createdAt DateTime             @default(now()) @map("created_at") @db.Timestamp()
+
+  @@index([userId], name: "idx_participation_user_id")
+  @@map("participation")
+}
+
+model Progress {
+  id                Int       @id @default(autoincrement())
+  userId            String    @map("user_id") @db.Uuid @unique
+  committeeProgress Float     @default(0) @map("committee_progress")
+  taskProgress      Float     @default(0) @map("task_progress")
+  presenceProgress  Float     @default(0) @map("presence_progress")
+  totalProgress     Float     @default(0) @map("total_progress")
+  updatedAt         DateTime  @default(now()) @map("updated_at") @db.Timestamp()
+
+  @@index([userId], name: "idx_progress_user_id")
+  @@map("progress")
+}
+
+enum ParticipationStatus {
+  accepted
+  rejected
+  pending
+}

@@ -1,0 +1,22 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+model Aspirasi {
+  id        Int       @id @default(autoincrement())
+  senderId  String?   @map("sender_id") @db.Uuid
+  target    String
+  subject   String
+  message   String
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamp()
+
+  @@index([senderId], name: "idx_aspirasi_sender_id")
+  @@index([target], name: "idx_aspirasi_target")
+  @@index([createdAt], name: "idx_aspirasi_created_at")
+  @@map("aspirasi")
+}

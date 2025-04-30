@@ -1,0 +1,286 @@
+services:
+
+
+  # AUTH SERVICE DATABASE
+  auth-service-db:
+    image: postgres:17.4-alpine
+    env_file: 
+      - ./backend/auth-service/.env
+    volumes:
+      - ./backend/auth-service/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./backend/auth-service/logs:/var/log/postgresql
+      - auth-data:/var/lib/postgresql/data
+    networks:
+      - oti-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d auth_service_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # AUTH SERVICE API
+  auth-service-api:
+    build: ./backend/auth-service
+    env_file:
+      - ./backend/auth-service/.env
+      - .env
+    volumes:
+      - ./backend/auth-service/logs:/home/appuser/app/logs
+    depends_on:
+      auth-service-db:
+        condition: service_healthy
+    networks:
+      - oti-network
+    ports:
+      - "${AUTH_SERVICE_PORT}:${AUTH_SERVICE_PORT}"
+
+  # EMAIL SERVICE DATABASE
+  email-service-db:
+    image: postgres:17.4-alpine
+    env_file: 
+      - ./backend/email-service/.env
+    volumes:
+      - ./backend/email-service/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./backend/email-service/logs:/var/log/postgresql
+      - email-data:/var/lib/postgresql/data
+    networks:
+      - oti-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d email_service_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # EMAIL SERVICE API
+  email-service-api:
+    build: ./backend/email-service
+    env_file:
+      - ./backend/email-service/.env
+      - .env
+    volumes:
+      - ./backend/email-service/logs:/home/appuser/app/logs
+    depends_on:
+      email-service-db:
+        condition: service_healthy
+    networks:
+      - oti-network
+    ports:
+      - "${EMAIL_SERVICE_PORT}:${EMAIL_SERVICE_PORT}"
+
+  # MEETING SERVICE DATABASE
+  meeting-service-db:
+    image: postgres:17.4-alpine
+    env_file: 
+      - ./backend/meeting-service/.env
+    volumes:
+      - ./backend/meeting-service/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./backend/meeting-service/logs:/var/log/postgresql
+      - meeting-data:/var/lib/postgresql/data
+    networks:
+      - oti-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d meeting_service_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # MEETING SERVICE API
+  meeting-service-api:
+    build: ./backend/meeting-service
+    env_file:
+      - ./backend/meeting-service/.env
+      - .env
+    volumes:
+      - ./backend/meeting-service/logs:/home/appuser/app/logs
+    depends_on:
+      meeting-service-db:
+        condition: service_healthy
+    networks:
+      - oti-network
+    ports:
+      - "${MEETING_SERVICE_PORT}:${MEETING_SERVICE_PORT}"
+
+  # TRAINING SERVICE DATABASE
+  training-service-db:
+    image: postgres:17.4-alpine
+    env_file: 
+      - ./backend/training-service/.env
+    volumes:
+      - ./backend/training-service/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./backend/training-service/logs:/var/log/postgresql
+      - training-data:/var/lib/postgresql/data
+    networks:
+      - oti-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d training_service_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # TRAINING SERVICE API
+  training-service-api:
+    build: ./backend/training-service
+    env_file:
+      - ./backend/training-service/.env
+      - .env
+    volumes:
+      - ./backend/training-service/logs:/home/appuser/app/logs
+    depends_on:
+      training-service-db:
+        condition: service_healthy
+    networks:
+      - oti-network
+    ports:
+      - "${TRAINING_SERVICE_PORT}:${TRAINING_SERVICE_PORT}"
+
+  # ASPIRASI SERVICE DATABASE
+  aspirasi-service-db:
+    image: postgres:17.4-alpine
+    env_file: 
+      - ./backend/aspirasi-service/.env
+    volumes:
+      - ./backend/aspirasi-service/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./backend/aspirasi-service/logs:/var/log/postgresql
+      - aspirasi-data:/var/lib/postgresql/data
+    networks:
+      - oti-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d aspirasi_service_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # ASPIRASI SERVICE API
+  aspirasi-service-api:
+    build: ./backend/aspirasi-service
+    env_file:
+      - ./backend/aspirasi-service/.env
+      - .env
+    volumes:
+      - ./backend/aspirasi-service/logs:/home/appuser/app/logs
+    depends_on:
+      aspirasi-service-db:
+        condition: service_healthy
+    networks:
+      - oti-network
+    ports:
+      - "${ASPIRASI_SERVICE_PORT}:${ASPIRASI_SERVICE_PORT}"
+
+  # PRESENCE SERVICE DATABASE
+  presence-service-db:
+    image: postgres:17.4-alpine
+    env_file: 
+      - ./backend/presence-service/.env
+    volumes:
+      - ./backend/presence-service/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./backend/presence-service/logs:/var/log/postgresql
+      - presence-data:/var/lib/postgresql/data
+    networks:
+      - oti-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d presence_service_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # PRESENCE SERVICE API
+  presence-service-api:
+    build: ./backend/presence-service
+    env_file:
+      - ./backend/presence-service/.env
+      - .env
+    volumes:
+      - ./backend/presence-service/logs:/home/appuser/app/logs
+    depends_on:
+      presence-service-db:
+        condition: service_healthy
+    networks:
+      - oti-network
+    ports:
+      - "${PRESENCE_SERVICE_PORT}:${PRESENCE_SERVICE_PORT}"
+
+  # PROGRESS SERVICE DATABASE
+  progress-service-db:
+    image: postgres:17.4-alpine
+    env_file: 
+      - ./backend/progress-service/.env
+    volumes:
+      - ./backend/progress-service/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./backend/progress-service/logs:/var/log/postgresql
+      - progress-data:/var/lib/postgresql/data
+    networks:
+      - oti-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d progress_service_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # PROGRESS SERVICE API
+  progress-service-api:
+    build: ./backend/progress-service
+    env_file:
+      - ./backend/progress-service/.env
+      - .env
+    volumes:
+      - ./backend/progress-service/logs:/home/appuser/app/logs
+    depends_on:
+      progress-service-db:
+        condition: service_healthy
+    networks:
+      - oti-network
+    ports:
+      - "${PROGRESS_SERVICE_PORT}:${PROGRESS_SERVICE_PORT}"
+      
+  # Redis cache service
+  redis:
+    container_name: redis
+    image: redis:7-alpine
+    command: redis-server --requirepass ${REDIS_PASSWORD}
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - oti-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD}", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+      
+  api-gateway:
+      build: ./api-gateway
+      ports:
+        - "${API_GATEWAY_PORT}:${API_GATEWAY_PORT}"
+      env_file:
+        - .env
+        - ./api-gateway/.env
+      volumes:
+      - ./api-gateway/logs:/usr/src/app/logs
+      depends_on:
+        redis:
+          condition: service_healthy
+      networks:
+        - oti-network
+      restart: unless-stopped
+      healthcheck:
+        test: ["CMD", "wget", "-qO-", "http://localhost:8000/health/light"]
+        interval: 30s
+        timeout: 10s
+        retries: 3
+
+networks:
+  oti-network:
+    driver: bridge
+
+volumes:
+  auth-data:
+  email-data:
+  meeting-data:
+  training-data:
+  aspirasi-data:
+  presence-data:
+  progress-data:
+  redis-data:
