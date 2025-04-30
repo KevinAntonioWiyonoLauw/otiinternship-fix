@@ -1,6 +1,13 @@
-# OTI Internship Management System
+# HUMAN LOOP - OmahTI Internship
 
-![OTI Internship Banner](https://via.placeholder.com/800x200?text=OTI+Internship+Management)
+![OTI Internship Banner](otiinternship.png)
+
+## 😎 Anggota
+- Christiano Jose Intoro (Frontend)
+- Fahmi Abdillah Zain (Sekretaris & Project Manager)
+- Kevin Antonio Wiyono Lauw (Backend)
+- Thomas Nadandra Aryawida (UI/UX)
+- Widad Muhammad Rafi (UI/UX)
 
 ## 📌 Overview
 
