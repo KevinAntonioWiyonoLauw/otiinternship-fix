@@ -258,7 +258,7 @@ services:
         - .env
         - ./api-gateway/.env
       volumes:
-      - ./api-gateway/logs:/usr/src/app/logs
+      - ./api-gateway/logs:/usr/srgit/app/logs
       depends_on:
         redis:
           condition: service_healthy
@@ -266,7 +266,7 @@ services:
         - oti-network
       restart: unless-stopped
       healthcheck:
-        test: ["CMD", "wget", "-qO-", "http://localhost:8000/health/light"]
+        test: ["CMD", "wget", "-qO-", "http://localhost:${API_GATEWAY_PORT}/health/light"]
         interval: 30s
         timeout: 10s
         retries: 3
