@@ -253,7 +253,7 @@ services:
   api-gateway:
       build: ./api-gateway
       ports:
-        - "8080:${API_GATEWAY_PORT}"
+        - "${API_GATEWAY_PORT}:${API_GATEWAY_PORT}"
       env_file:
         - .env
         - ./api-gateway/.env
