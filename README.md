@@ -157,6 +157,7 @@ The project uses automated CI/CD workflows for:
 
 ```
 otiinternship/
+├── api-gateway/          # Gateway for all services
 ├── frontend/             # Next.js frontend application
 ├── backend/              # Backend microservices
 │   ├── auth-service/     # Authentication service
