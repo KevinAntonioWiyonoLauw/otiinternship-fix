@@ -117,3 +117,5 @@ export const isAuthenticated = () => {
 export const updateUserData = (user: User) => {
   localStorage.setItem(USER_KEY, JSON.stringify(user));
 };
+
+// ngapain disini bang :P
