@@ -2,9 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-import { useAuth } from '@/context/AuthContext';
+import { useAuth } from '../context/AuthContext';
 import { useRouter } from 'next/navigation';
-import { showToast } from '@/components/ui/custom-toast';
+import { showToast } from '../components/ui/custom-toast';
 import { Users, Settings, LayoutDashboard, Layers } from 'lucide-react';
 import Link from 'next/link';
 import { AuthenticatedNavbar } from '../components/layout/AuthenticatedNavbar';
@@ -92,4 +92,4 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       </main>
     </div>
   );
-} 
+}
