@@ -262,7 +262,6 @@ export default function SchedulePage() {
   const [loadingMeetingDetail, setLoadingMeetingDetail] = useState(false);
 
   const isKadiv = hasRole('KADIV');
-  console.log('SchedulePage user:', user);
 
   useEffect(() => {
     fetchEvents();

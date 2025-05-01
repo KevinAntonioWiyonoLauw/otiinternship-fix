@@ -23,7 +23,6 @@ async function verifyToken(token: string) {
 // Function to refresh token
 async function refreshToken(refreshToken: string) {
   try {
-    console.log('Attempting to refresh token...');
     
     if (!refreshToken) {
       console.error('No refresh token provided');
@@ -38,8 +37,6 @@ async function refreshToken(refreshToken: string) {
       body: JSON.stringify({ refreshToken }),
       credentials: 'include',
     });
-
-    console.log('Refresh token response status:', response.status);
     
     if (!response.ok) {
       const errorText = await response.text();
@@ -52,7 +49,6 @@ async function refreshToken(refreshToken: string) {
     }
 
     const data = await response.json();
-    console.log('Refresh token response:', data);
     
     if (!data.success) {
       console.error('Token refresh failed:', data.message);
