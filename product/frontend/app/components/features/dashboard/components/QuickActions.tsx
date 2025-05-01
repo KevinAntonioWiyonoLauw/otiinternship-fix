@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Plus, MessageSquare, Sparkles } from 'lucide-react';
-import Button from '../../../atoms/Button';
+import { Button } from '@/components/ui/button';
 
 interface QuickActionsProps {
   isKadiv?: boolean;
@@ -46,4 +46,4 @@ const QuickActions: React.FC<QuickActionsProps> = ({ isKadiv }) => {
   );
 };
 
-export default QuickActions; 
+export default QuickActions;

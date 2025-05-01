@@ -1,8 +1,9 @@
 "use client";
 
-import dynamic from 'next/dynamic';
 import { Suspense, useEffect, useState } from 'react';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
+import Spline from '@splinetool/react-spline';
 
 // Preload the Spline scene
 const preloadSplineScene = () => {
@@ -14,12 +15,6 @@ const preloadSplineScene = () => {
   document.head.appendChild(link);
   return () => document.head.removeChild(link);
 };
-
-// Dynamically import Spline with priority loading
-const Spline = dynamic(() => import('@splinetool/react-spline'), {
-  ssr: false,
-  loading: () => <StaticPlaceholder />,
-});
 
 // Static placeholder component with robot silhouette
 function StaticPlaceholder() {
@@ -42,7 +37,8 @@ function StaticPlaceholder() {
   );
 }
 
-export default function SplineScene() {
+// Client-side only component for the actual Spline content
+function SplineContent() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -72,53 +68,68 @@ export default function SplineScene() {
   };
 
   const adjustMobileView = () => {
-    if (typeof window !== 'undefined') {
-      const canvas = document.querySelector('canvas');
-      if (!canvas) return;
+    const canvas = document.querySelector('canvas');
+    if (!canvas) return;
 
-      // Reset styles
-      canvas.style.cssText = '';
-      
-      // Base styles for mobile
-      canvas.style.position = 'absolute';
-      canvas.style.width = '200%';
-      canvas.style.height = '100%';
-      canvas.style.left = '-50%';
-      canvas.style.top = '0';
-      
-      // Adjust resolution
-      canvas.width = window.innerWidth * 2;
-      canvas.height = window.innerHeight;
-    }
+    // Reset styles
+    canvas.style.cssText = '';
+    
+    // Base styles for mobile
+    canvas.style.position = 'absolute';
+    canvas.style.width = '200%';
+    canvas.style.height = '100%';
+    canvas.style.left = '-50%';
+    canvas.style.top = '0';
+    
+    // Adjust resolution
+    canvas.width = window.innerWidth * 2;
+    canvas.height = window.innerHeight;
   };
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      // Handle resize with debounce
-      let resizeTimer: NodeJS.Timeout;
-      const handleResize = () => {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(() => {
-          if (isLoaded) {
-            adjustMobileView();
-          }
-        }, 250);
-      };
+    // Handle resize with debounce
+    let resizeTimer: NodeJS.Timeout;
+    const handleResize = () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        if (isLoaded) {
+          adjustMobileView();
+        }
+      }, 250);
+    };
 
-      window.addEventListener('resize', handleResize);
-      window.addEventListener('orientationchange', adjustMobileView);
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('orientationchange', adjustMobileView);
 
-      // Initial adjustment
-      adjustMobileView();
-
-      return () => {
-        window.removeEventListener('resize', handleResize);
-        window.removeEventListener('orientationchange', adjustMobileView);
-        clearTimeout(resizeTimer);
-      };
-    }
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('orientationchange', adjustMobileView);
+      clearTimeout(resizeTimer);
+    };
   }, [isLoaded]);
 
+  return (
+    <div 
+      className={`w-full h-full transition-opacity duration-500 ${
+        isVisible ? 'opacity-100' : 'opacity-0'
+      }`}
+    >
+      <Spline
+        scene="https://prod.spline.design/gBFG8XIJ5Q0yRyqh/scene.splinecode"
+        className="w-full h-full"
+        onLoad={onLoad}
+      />
+    </div>
+  );
+}
+
+// Dynamically import the SplineContent component with no SSR
+const NoSSRSplineContent = dynamic(
+  () => Promise.resolve(SplineContent),
+  { ssr: false }
+);
+
+export default function SplineScene() {
   return (
     <div className="w-full h-screen relative overflow-hidden">
       <div 
@@ -128,19 +139,9 @@ export default function SplineScene() {
         }}
       >
         <Suspense fallback={<StaticPlaceholder />}>
-          <div 
-            className={`w-full h-full transition-opacity duration-500 ${
-              isVisible ? 'opacity-100' : 'opacity-0'
-            }`}
-          >
-            <Spline
-              scene="https://prod.spline.design/gBFG8XIJ5Q0yRyqh/scene.splinecode"
-              className="w-full h-full"
-              onLoad={onLoad}
-            />
-          </div>
+          <NoSSRSplineContent />
         </Suspense>
       </div>
     </div>
   );
-} 
+}

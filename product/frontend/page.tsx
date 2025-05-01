@@ -6,6 +6,7 @@ import Logo from '@/components/atoms/Logo';
 import LoginForm from '@/components/molecules/LoginForm';
 import { useAuth } from '@/context/AuthContext';
 import { toast } from '@/hooks/use-toast';
+import api from '@/lib/api';
 
 const LoginPage: React.FC = () => {
   const router = useRouter();
@@ -15,7 +16,15 @@ const LoginPage: React.FC = () => {
   const handleLogin = async (email: string, password: string) => {
     try {
       setIsLoading(true);
-      await login(email, password);
+      const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+      // First, make the API call to get the token and user data
+      const response = await api.post(`${BASE_URL}/api/auth/login`, {
+        email,
+        password,
+      });
+      
+      // Then pass the complete response data to the login function
+      await login(response.data);
       router.push('/dashboard');
     } catch (error) {
       console.error('Login failed:', error);
@@ -61,4 +70,4 @@ const LoginPage: React.FC = () => {
   );
 };
 
-export default LoginPage; 
+export default LoginPage;

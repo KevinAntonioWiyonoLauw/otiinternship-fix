@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Logo from '@/components/atoms/Logo';
 import LoginForm from '@/components/molecules/LoginForm';
@@ -10,7 +10,18 @@ import { showToast } from '@/components/ui/custom-toast';
 import { isAuthenticated } from '../lib/auth';
 import type { AuthResponse } from '../types/api';
 
-const LoginPage: React.FC = () => {
+// Loading component to display while the suspense is resolving
+const LoginLoading = () => (
+  <div className="min-h-screen bg-dark-900 flex items-center justify-center p-4">
+    <div className="text-center">
+      <Logo className="mx-auto" />
+      <p className="text-white mt-4">Loading...</p>
+    </div>
+  </div>
+);
+
+// Component that uses useSearchParams, wrapped in Suspense
+const LoginContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { login } = useAuth();
@@ -99,4 +110,13 @@ const LoginPage: React.FC = () => {
   );
 };
 
-export default LoginPage; 
+// Main component that renders the content with suspense
+const LoginPage: React.FC = () => {
+  return (
+    <Suspense fallback={<LoginLoading />}>
+      <LoginContent />
+    </Suspense>
+  );
+};
+
+export default LoginPage;

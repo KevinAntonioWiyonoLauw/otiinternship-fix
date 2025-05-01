@@ -81,7 +81,6 @@ const protectedRoutes = [
     // Meetings (only Kadiv can manage reminders & delete)
     '/api/meetings/reminders/send',
     '/api/meetings/reminders/force/:id',
-    '/api/meetings/:id',
   
     // Trainings (only Kadiv can create/update/delete/enroll)
     '/api/trainings',
@@ -111,7 +110,9 @@ const matchKadivOnlyRoute = (path) => {
     /^\/api\/divisions(\/[^/]+)?(\/users(\/[^/]+)?)?$/,
     /^\/api\/meetings\/reminders\/send$/,
     /^\/api\/meetings\/reminders\/force\/[^/]+$/,
-    /^\/api\/meetings\/(?!upcoming$)[^/]+$/,
+    // Modified pattern to exclude simple meeting detail requests
+    // Only match meeting routes for DELETE/PUT/PATCH operations that modify meetings
+    /^\/api\/meetings\/[^/]+\/(delete|update|edit|modify|cancel)$/,
     /^\/api\/trainings(?!\/upcoming)(\/[^/]+)?(\/add-division-members|\/force-add-participants|\/check-conflict|\/reminders|\/reminders\/send|\/reminders\/force\/[^/]+)?$/
   ];
   return dynamicRoutes.some((re) => re.test(path));

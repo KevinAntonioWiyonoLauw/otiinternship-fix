@@ -13,6 +13,5 @@ export const showToast = ({ title, description, variant }: ToastProps) => {
     title,
     description,
     variant,
-    duration: 5000,
   });
 }; 

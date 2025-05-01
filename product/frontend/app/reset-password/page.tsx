@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Input from '@/components/atoms/Input';
 import Button from '@/components/atoms/Button';
@@ -9,7 +9,18 @@ import Link from 'next/link';
 import { showToast } from '@/components/ui/custom-toast';
 import { ArrowLeft } from 'lucide-react';
 
-const ResetPasswordPage: React.FC = () => {
+// Loading component to display while the suspense is resolving
+const ResetPasswordLoading = () => (
+  <div className="min-h-screen bg-dark-900 flex items-center justify-center p-4">
+    <div className="text-center">
+      <Logo className="mx-auto" />
+      <p className="text-white mt-4">Loading...</p>
+    </div>
+  </div>
+);
+
+// Component that uses useSearchParams, wrapped in Suspense
+const ResetPasswordContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get('token');
@@ -186,6 +197,15 @@ const ResetPasswordPage: React.FC = () => {
         )}
       </div>
     </div>
+  );
+};
+
+// Main component that renders the content with suspense
+const ResetPasswordPage: React.FC = () => {
+  return (
+    <Suspense fallback={<ResetPasswordLoading />}>
+      <ResetPasswordContent />
+    </Suspense>
   );
 };
 

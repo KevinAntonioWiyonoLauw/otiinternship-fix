@@ -1,16 +1,16 @@
 'use client';
 
 import { Calendar, Video, BarChart3, MessageSquare } from 'lucide-react';
-import SpotlightCard from './components/ui/SpotlightCard';
-import BlurText from './components/ui/BlurText';
-import { Navbar } from './components/layout/Navbar';
-import { Footer } from './components/layout/Footer';
-import SplineScene from './components/SplineScene';
-import AnimatedBeam from './components/ui/animated-beam';
-import { AspirasiCard } from './components/aspirasi/AspirasiCard';
+import SpotlightCard from '@/components/ui/SpotlightCard';
+import BlurText from '@/components/ui/BlurText';
+import { Navbar } from '@/components/layout/Navbar';
+import { Footer } from '@/components/layout/Footer';
+import SplineScene from '@/components/SplineScene';
+import AnimatedBeam from '@/components/ui/animated-beam';
+import { AspirasiCard } from '@/components/aspirasi/AspirasiCard';
 import { useState, useEffect } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
-import { getAspirations } from './api/aspirasi';
+import { getAspirations } from '@/api/aspirasi';
 import { Loader2 } from 'lucide-react';
 
 interface Aspiration {

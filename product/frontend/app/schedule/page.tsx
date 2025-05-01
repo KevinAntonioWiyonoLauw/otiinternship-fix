@@ -27,7 +27,7 @@ import { DatePicker } from "@/components/ui/date-picker";
 import { TimePicker } from "@/components/ui/time-picker";
 import Aurora from "@/components/effects/Aurora";
 import { useAuth } from "../context/AuthContext";
-import { getMeetings, getTrainings, createMeeting, createTraining, getMeetingById } from '../lib/api';
+import { getMeetings, getTrainings, createMeeting, createTraining, getMeetingById, joinMeeting } from '../lib/api';
 import { format as formatDateFns, parseISO } from 'date-fns';
 import { useRouter } from "next/navigation";
 
@@ -242,7 +242,7 @@ function CreateTrainingForm({ onSuccess, user }: CreateTrainingFormProps) {
 export default function SchedulePage() {
   const { user, hasRole, loading } = useAuth();
   const router = useRouter();
-  const [currentDate, setCurrentDate] = useState<Date>(new Date(2025, 3, 1));
+  const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [activeTab, setActiveTab] = useState<"meeting" | "training">("meeting");
   const [joinCode, setJoinCode] = useState("");
@@ -351,19 +351,33 @@ export default function SchedulePage() {
     setSelectedDate(null);
   };
 
-  const handleJoinMeeting = () => {
-    const meetingToJoin = events.find(
-      (event: any) => event.type === "meeting" && event.joinCode === joinCode
-    );
-    if (meetingToJoin) {
-      setJoinedMeetings(prev => [...prev, meetingToJoin.id]);
-      setIsJoinDialogOpen(false);
-      setJoinCode("");
-      setIsSuccessJoinAlert(true);
-      setTimeout(() => {
-        setIsSuccessJoinAlert(false);
-      }, 3000);
-    } else {
+  const handleJoinMeeting = async () => {
+    if (!joinCode) return;
+    
+    try {
+      // Make API call to actually join the meeting
+      const response = await joinMeeting({
+        join_code: joinCode
+      });
+      
+      // Update UI state
+      if (response.success) {
+        if (response.meeting && response.meeting.id) {
+          setJoinedMeetings(prev => [...prev, response.meeting.id]);
+        }
+        setIsJoinDialogOpen(false);
+        setJoinCode("");
+        setIsSuccessJoinAlert(true);
+        
+        // Refresh the events list to show updated join status
+        await fetchEvents();
+        
+        setTimeout(() => {
+          setIsSuccessJoinAlert(false);
+        }, 3000);
+      }
+    } catch (error: any) {
+      console.error("Failed to join meeting:", error);
       setIsAlertOpen(true);
     }
   };

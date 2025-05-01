@@ -23,6 +23,13 @@ import { useAuthenticatedApi } from '@/hooks/useAuthenticatedApi';
 
 const NEXT_PUBLIC_API_URL = 'http://localhost:8000/api';
 
+interface User {
+  id: string;
+  email: string;
+  niu?: string;
+  namaLengkap?: string;
+}
+
 interface AddUserToDivisionProps {
   divisionId: number;
   onSuccess: () => void;
@@ -55,7 +62,7 @@ export default function AddUserToDivision({ divisionId, onSuccess }: AddUserToDi
         throw new Error('Failed to fetch users');
       }
 
-      const user = usersResponse.users.find(u => u.email.toLowerCase() === email.toLowerCase());
+      const user = usersResponse.users.find((u: User) => u.email.toLowerCase() === email.toLowerCase());
       if (!user) {
         throw new Error('User not found');
       }
@@ -163,4 +170,4 @@ export default function AddUserToDivision({ divisionId, onSuccess }: AddUserToDi
       </DialogContent>
     </Dialog>
   );
-} 
+}

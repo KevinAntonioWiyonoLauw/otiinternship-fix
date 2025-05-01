@@ -3,7 +3,8 @@
 import { useRef, useEffect, useState } from 'react';
 import { useSprings, animated, SpringValue } from '@react-spring/web';
 
-const AnimatedSpan = animated.span as React.FC<React.HTMLAttributes<HTMLSpanElement>>;
+// Fixed: Use proper typing for animated components
+const AnimatedSpan = animated('span') as React.FC<React.HTMLAttributes<HTMLSpanElement>>;
 
 interface BlurTextProps {
   text?: string;
@@ -107,4 +108,4 @@ const BlurText: React.FC<BlurTextProps> = ({
   );
 };
 
-export default BlurText; 
+export default BlurText;

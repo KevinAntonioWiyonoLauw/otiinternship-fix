@@ -66,6 +66,13 @@ export async function createMeeting(data: {
   return res.data;
 }
 
+export async function joinMeeting(data: {
+  join_code: string;
+}) {
+  const res = await api.post('/api/meetings/join', data);
+  return res.data;
+}
+
 export async function getMeetingById(id: string | number) {
   const res = await api.get(`/api/meetings/${id}`);
   return res.data;
@@ -89,4 +96,4 @@ export async function createTraining(data: {
   return res.data;
 }
 
-export default api; 
+export default api;

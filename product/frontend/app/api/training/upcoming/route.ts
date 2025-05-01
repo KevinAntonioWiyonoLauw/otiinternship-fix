@@ -1,14 +1,12 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../../auth/[...nextauth]/route";
+import { authOptions } from "@/lib/auth-config";
 
 export async function GET(req: Request) {
   try {
     const session = await getServerSession(authOptions);
-    console.log("Session in /api/trainings/upcoming:", session);
 
     if (!session?.user) {
-      console.log("No session or user found");
       return NextResponse.json(
         { error: "Unauthorized - No session" },
         { status: 401 }
@@ -16,7 +14,6 @@ export async function GET(req: Request) {
     }
 
     if (!session.user.token) {
-      console.log("No token found in session");
       return NextResponse.json(
         { error: "Unauthorized - No token" },
         { status: 401 }
@@ -39,7 +36,6 @@ export async function GET(req: Request) {
     }
 
     const data = await response.json();
-    console.log("Training data received:", data);
 
     // Semua user bisa melihat semua training, tanpa filter division
     return NextResponse.json(data.trainings);
@@ -50,4 +46,4 @@ export async function GET(req: Request) {
       { status: 500 }
     );
   }
-} 
+}

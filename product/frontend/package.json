@@ -24,8 +24,6 @@
     "@radix-ui/react-toast": "^1.2.11",
     "@radix-ui/themes": "^3.0.0",
     "@react-spring/web": "^9.7.5",
-    "@splinetool/react-spline": "^4.0.0",
-    "@splinetool/runtime": "^1.9.85",
     "@types/js-cookie": "^3.0.6",
     "@zxing/library": "^0.21.3",
     "axios": "^1.9.0",
@@ -38,7 +36,7 @@
     "jose": "^6.0.10",
     "js-cookie": "^3.0.5",
     "lucide-react": "^0.331.0",
-    "next": "15.3.1",
+    "next": "^15.3.1",
     "next-auth": "^4.24.11",
     "next-themes": "^0.2.1",
     "ogl": "^1.0.11",
@@ -57,6 +55,8 @@
     "zod": "^3.24.3"
   },
   "devDependencies": {
+    "@splinetool/react-spline": "^4.0.0",
+    "@splinetool/runtime": "^1.9.89",
     "@types/node": "^20.11.0",
     "@types/qrcode": "^1.5.5",
     "@types/react": "^19.1.2",
