@@ -31,8 +31,6 @@ services:
         condition: service_healthy
     networks:
       - oti-network
-    ports:
-      - "${AUTH_SERVICE_PORT}:${AUTH_SERVICE_PORT}"
 
   # EMAIL SERVICE DATABASE
   email-service-db:
@@ -64,8 +62,6 @@ services:
         condition: service_healthy
     networks:
       - oti-network
-    ports:
-      - "${EMAIL_SERVICE_PORT}:${EMAIL_SERVICE_PORT}"
 
   # MEETING SERVICE DATABASE
   meeting-service-db:
@@ -97,8 +93,6 @@ services:
         condition: service_healthy
     networks:
       - oti-network
-    ports:
-      - "${MEETING_SERVICE_PORT}:${MEETING_SERVICE_PORT}"
 
   # TRAINING SERVICE DATABASE
   training-service-db:
@@ -130,8 +124,6 @@ services:
         condition: service_healthy
     networks:
       - oti-network
-    ports:
-      - "${TRAINING_SERVICE_PORT}:${TRAINING_SERVICE_PORT}"
 
   # ASPIRASI SERVICE DATABASE
   aspirasi-service-db:
@@ -163,8 +155,6 @@ services:
         condition: service_healthy
     networks:
       - oti-network
-    ports:
-      - "${ASPIRASI_SERVICE_PORT}:${ASPIRASI_SERVICE_PORT}"
 
   # PRESENCE SERVICE DATABASE
   presence-service-db:
@@ -196,8 +186,6 @@ services:
         condition: service_healthy
     networks:
       - oti-network
-    ports:
-      - "${PRESENCE_SERVICE_PORT}:${PRESENCE_SERVICE_PORT}"
 
   # PROGRESS SERVICE DATABASE
   progress-service-db:
@@ -229,8 +217,6 @@ services:
         condition: service_healthy
     networks:
       - oti-network
-    ports:
-      - "${PROGRESS_SERVICE_PORT}:${PROGRESS_SERVICE_PORT}"
       
   # Redis cache service
   redis:
@@ -270,6 +256,20 @@ services:
         interval: 30s
         timeout: 10s
         retries: 3
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx_reverse_proxy
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx/logs:/var/log/nginx
+    depends_on:
+      - api-gateway
+    networks:
+      - oti-network
+    restart: unless-stopped
 
 networks:
   oti-network:
