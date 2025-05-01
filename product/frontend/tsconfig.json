@@ -20,7 +20,7 @@
       }
     ],
     "paths": {
-      "@/*": ["./app/*"] 
+      "@/*": ["./app/*"] // Change back to explicitly relative path
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/types/**/*.d.ts"],
