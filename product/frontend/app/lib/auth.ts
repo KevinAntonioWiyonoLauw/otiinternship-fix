@@ -3,12 +3,9 @@
 import { User, AuthResponse } from '../types/api';
 import Cookies from 'js-cookie';
 
-
-const isDevelopment = process.env.NODE_ENV === 'development';
 let DEBUG_AUTH = false; 
-
-if(isDevelopment){
-DEBUG_AUTH = true; 
+if(process.env.NODE_ENV === 'development'){
+  DEBUG_AUTH = true; 
 }
 
 const TOKEN_KEY = 'auth_token';
