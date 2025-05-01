@@ -2,15 +2,15 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import { Plus, Loader2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { AspirasiList } from "@/components/aspirasi/AspirasiList";
-import { AddAspirasiDialog } from "@/components/aspirasi/AddAspirasiDialog";
-import { Aspirasi } from "@/types/aspirasi";
-import Aurora from "@/components/effects/Aurora";
+import { Button } from "../components/ui/button";
+import { AspirasiList } from "../components/aspirasi/AspirasiList";
+import { AddAspirasiDialog } from "../components/aspirasi/AddAspirasiDialog";
+import { Aspirasi } from "../types/aspirasi";
+import Aurora from "../components/effects/Aurora";
 import { useAuth } from "../context/AuthContext";
 import { useRouter } from "next/navigation";
-import { useAuthenticatedApi } from "@/hooks/useAuthenticatedApi";
-import { useToast } from "@/components/ui/use-toast"; // Pastikan useToast diimpor
+import { useAuthenticatedApi } from "../hooks/useAuthenticatedApi";
+import { useToast } from "../components/ui/use-toast"; // Pastikan useToast diimpor
 
 const REQUEST_THROTTLE_MS = 3000; // Waktu throttle dalam milidetik
 
