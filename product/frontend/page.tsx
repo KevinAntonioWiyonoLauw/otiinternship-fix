@@ -16,7 +16,7 @@ const LoginPage: React.FC = () => {
   const handleLogin = async (email: string, password: string) => {
     try {
       setIsLoading(true);
-      const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+      const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:6969';
       // First, make the API call to get the token and user data
       const response = await api.post(`${BASE_URL}/api/auth/login`, {
         email,

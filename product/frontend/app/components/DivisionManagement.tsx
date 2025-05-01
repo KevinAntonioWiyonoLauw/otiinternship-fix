@@ -24,7 +24,7 @@ import { useAuth } from '@/context/AuthContext';
 import { useAuthenticatedApi } from '@/hooks/useAuthenticatedApi';
 import { X, Trash2 } from 'lucide-react';
 
-const NEXT_PUBLIC_API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+const NEXT_PUBLIC_API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:6969';
 
 interface DivisionResponse {
   division_id?: number;

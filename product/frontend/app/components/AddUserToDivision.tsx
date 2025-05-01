@@ -21,7 +21,7 @@ import {
 import { useToast } from '@/components/ui/use-toast';
 import { useAuthenticatedApi } from '@/hooks/useAuthenticatedApi';
 
-const NEXT_PUBLIC_API_URL = 'http://localhost:8000/api';
+const NEXT_PUBLIC_API_URL = 'http://localhost:6969/api';
 
 interface User {
   id: string;

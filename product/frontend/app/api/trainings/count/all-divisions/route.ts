@@ -20,7 +20,7 @@ export async function GET(req: Request) {
     }
 
     // Fetch training counts for all divisions from the backend service
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:6969';
     const response = await fetch(`${apiUrl}/api/trainings/count/all-divisions`, {
       headers: {
         "Content-Type": "application/json",

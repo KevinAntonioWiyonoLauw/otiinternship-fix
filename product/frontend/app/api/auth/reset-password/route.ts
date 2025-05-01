@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Forward the request to the backend auth service
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/auth/reset-password`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:6969'}/api/auth/reset-password`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

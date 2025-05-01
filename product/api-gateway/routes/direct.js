@@ -118,7 +118,7 @@ const createDirectHandlers = (app) => {
   const normalizeUrl = (url) => {
     if (!url) {
       logger.error('Invalid service URL provided');
-      return 'http://localhost:8000';
+      return 'http://localhost:6969';
     }
     return url.endsWith('/') ? url.slice(0, -1) : url;
   };

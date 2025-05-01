@@ -4,10 +4,8 @@ services:
   # AUTH SERVICE DATABASE
   auth-service-db:
     image: postgres:17.4-alpine
-    environment:
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=auth_service_db
+    env_file: 
+      - ./backend/auth-service/.env
     volumes:
       - ./backend/auth-service/db/init.sql:/docker-entrypoint-initdb.d/init.sql
       - ./backend/auth-service/logs:/var/log/postgresql
@@ -23,20 +21,9 @@ services:
   # AUTH SERVICE API
   auth-service-api:
     build: ./backend/auth-service
-    environment:
-      - PORT=${AUTH_SERVICE_PORT}
-      - NODE_ENV=${NODE_ENV}
-      - JWT_SECRET=${JWT_SECRET}
-      - JWT_EXPIRY=${JWT_EXPIRY}
-      - REFRESH_TOKEN_EXPIRY=${REFRESH_TOKEN_EXPIRY}
-      - DB_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@auth-service-db:5432/auth_service_db?sslmode=disable
-      - EMAIL_SERVICE_URL=${EMAIL_SERVICE_URL}
-      - TRAINING_SERVICE_URL=${TRAINING_SERVICE_URL}
-      - PASSWORD_SALT_ROUNDS=10
-      - FRONTEND_URL=${FRONTEND_URL}
-      - ALLOWED_ORIGINS=${ALLOWED_ORIGINS}
-      - LOG_LEVEL=${LOG_LEVEL}
-      - LOG_PATH=${LOG_PATH}
+    env_file:
+      - ./backend/auth-service/.env
+      - .env
     volumes:
       - ./backend/auth-service/logs:/home/appuser/app/logs
     depends_on:
@@ -50,10 +37,8 @@ services:
   # EMAIL SERVICE DATABASE
   email-service-db:
     image: postgres:17.4-alpine
-    environment:
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=email_service_db
+    env_file: 
+      - ./backend/email-service/.env
     volumes:
       - ./backend/email-service/db/init.sql:/docker-entrypoint-initdb.d/init.sql
       - ./backend/email-service/logs:/var/log/postgresql
@@ -69,23 +54,9 @@ services:
   # EMAIL SERVICE API
   email-service-api:
     build: ./backend/email-service
-    environment:
-      - PORT=${EMAIL_SERVICE_PORT}
-      - NODE_ENV=${NODE_ENV}
-      - JWT_SECRET=${JWT_SECRET}
-      - JWT_EXPIRY=${JWT_EXPIRY}
-      - SMTP_HOST=${SMTP_HOST}
-      - SMTP_PORT=${SMTP_PORT}
-      - SMTP_SECURE=${SMTP_SECURE}
-      - SMTP_USER=${SMTP_USER}
-      - SMTP_PASSWORD=${SMTP_PASSWORD}
-      - EMAIL_FROM=${EMAIL_FROM}
-      - AUTH_SERVICE_URL=${AUTH_SERVICE_URL}
-      - ALLOWED_ORIGINS=${ALLOWED_ORIGINS}
-      - LOG_LEVEL=${LOG_LEVEL}
-      - LOG_PATH=${LOG_PATH}
-      - DB_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@email-service-db:5432/email_service_db?sslmode=disable
-      - FRONTEND_URL=${FRONTEND_URL}
+    env_file:
+      - ./backend/email-service/.env
+      - .env
     volumes:
       - ./backend/email-service/logs:/home/appuser/app/logs
     depends_on:
@@ -99,10 +70,8 @@ services:
   # MEETING SERVICE DATABASE
   meeting-service-db:
     image: postgres:17.4-alpine
-    environment:
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=meeting_service_db
+    env_file: 
+      - ./backend/meeting-service/.env
     volumes:
       - ./backend/meeting-service/db/init.sql:/docker-entrypoint-initdb.d/init.sql
       - ./backend/meeting-service/logs:/var/log/postgresql
@@ -118,23 +87,9 @@ services:
   # MEETING SERVICE API
   meeting-service-api:
     build: ./backend/meeting-service
-    environment:
-      - PORT=${MEETING_SERVICE_PORT}
-      - NODE_ENV=${NODE_ENV}
-      - SERVICE_AUTH_KEY=meeting-service-secret-key
-      - JWT_SECRET=${JWT_SECRET}
-      - JWT_EXPIRY=${JWT_EXPIRY}
-      - DB_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@meeting-service-db:5432/meeting_service_db?sslmode=disable&TimeZone=Asia/Jakarta
-      - AUTH_SERVICE_URL=${AUTH_SERVICE_URL}
-      - EMAIL_SERVICE_URL=${EMAIL_SERVICE_URL}
-      - ALLOWED_ORIGINS=${ALLOWED_ORIGINS}
-      - LOG_LEVEL=${LOG_LEVEL}
-      - LOG_PATH=${LOG_PATH}
-      - REDIS_HOST=${REDIS_HOST}
-      - REDIS_PORT=${REDIS_PORT}
-      - REDIS_PASSWORD=${REDIS_PASSWORD}
-      - ADMIN_USERNAME=${ADMIN_USERNAME}
-      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+    env_file:
+      - ./backend/meeting-service/.env
+      - .env
     volumes:
       - ./backend/meeting-service/logs:/home/appuser/app/logs
     depends_on:
@@ -148,10 +103,8 @@ services:
   # TRAINING SERVICE DATABASE
   training-service-db:
     image: postgres:17.4-alpine
-    environment:
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=training_service_db
+    env_file: 
+      - ./backend/training-service/.env
     volumes:
       - ./backend/training-service/db/init.sql:/docker-entrypoint-initdb.d/init.sql
       - ./backend/training-service/logs:/var/log/postgresql
@@ -167,23 +120,9 @@ services:
   # TRAINING SERVICE API
   training-service-api:
     build: ./backend/training-service
-    environment:
-      - PORT=${TRAINING_SERVICE_PORT}
-      - NODE_ENV=${NODE_ENV}
-      - SERVICE_AUTH_KEY=${SERVICE_AUTH_KEY_TRAINING}
-      - JWT_SECRET=${JWT_SECRET}
-      - JWT_EXPIRY=${JWT_EXPIRY}
-      - DB_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@training-service-db:5432/training_service_db?sslmode=disable&TimeZone=Asia/Jakarta
-      - AUTH_SERVICE_URL=${AUTH_SERVICE_URL}
-      - EMAIL_SERVICE_URL=${EMAIL_SERVICE_URL}
-      - MEETING_SERVICE_URL=${MEETING_SERVICE_URL}
-      - LOG_LEVEL=${LOG_LEVEL}
-      - LOG_PATH=${LOG_PATH}
-      - REDIS_HOST=${REDIS_HOST}
-      - REDIS_PORT=${REDIS_PORT}
-      - REDIS_PASSWORD=${REDIS_PASSWORD}
-      - ADMIN_USERNAME=${ADMIN_USERNAME}
-      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+    env_file:
+      - ./backend/training-service/.env
+      - .env
     volumes:
       - ./backend/training-service/logs:/home/appuser/app/logs
     depends_on:
@@ -197,10 +136,8 @@ services:
   # ASPIRASI SERVICE DATABASE
   aspirasi-service-db:
     image: postgres:17.4-alpine
-    environment:
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=aspirasi_service_db
+    env_file: 
+      - ./backend/aspirasi-service/.env
     volumes:
       - ./backend/aspirasi-service/db/init.sql:/docker-entrypoint-initdb.d/init.sql
       - ./backend/aspirasi-service/logs:/var/log/postgresql
@@ -216,16 +153,9 @@ services:
   # ASPIRASI SERVICE API
   aspirasi-service-api:
     build: ./backend/aspirasi-service
-    environment:
-      - PORT=${ASPIRASI_SERVICE_PORT}
-      - NODE_ENV=${NODE_ENV}
-      - JWT_SECRET=${JWT_SECRET}
-      - JWT_EXPIRY=${JWT_EXPIRY}
-      - DB_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@aspirasi-service-db:5432/aspirasi_service_db?sslmode=disable
-      - AUTH_SERVICE_URL=${AUTH_SERVICE_URL}
-      - ALLOWED_ORIGINS=${ALLOWED_ORIGINS}
-      - LOG_LEVEL=${LOG_LEVEL}
-      - LOG_PATH=${LOG_PATH}
+    env_file:
+      - ./backend/aspirasi-service/.env
+      - .env
     volumes:
       - ./backend/aspirasi-service/logs:/home/appuser/app/logs
     depends_on:
@@ -239,10 +169,8 @@ services:
   # PRESENCE SERVICE DATABASE
   presence-service-db:
     image: postgres:17.4-alpine
-    environment:
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=presence_service_db
+    env_file: 
+      - ./backend/presence-service/.env
     volumes:
       - ./backend/presence-service/db/init.sql:/docker-entrypoint-initdb.d/init.sql
       - ./backend/presence-service/logs:/var/log/postgresql
@@ -258,18 +186,9 @@ services:
   # PRESENCE SERVICE API
   presence-service-api:
     build: ./backend/presence-service
-    environment:
-      - PORT=${PRESENCE_SERVICE_PORT}
-      - NODE_ENV=${NODE_ENV}
-      - JWT_SECRET=${JWT_SECRET}
-      - JWT_EXPIRY=${JWT_EXPIRY}
-      - QR_SECRET=${QR_SECRET}
-      - DB_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@presence-service-db:5432/presence_service_db?sslmode=disable
-      - AUTH_SERVICE_URL=${AUTH_SERVICE_URL}
-      - TRAINING_SERVICE_URL=${TRAINING_SERVICE_URL}
-      - ALLOWED_ORIGINS=${ALLOWED_ORIGINS}
-      - LOG_LEVEL=${LOG_LEVEL}
-      - LOG_PATH=${LOG_PATH}
+    env_file:
+      - ./backend/presence-service/.env
+      - .env
     volumes:
       - ./backend/presence-service/logs:/home/appuser/app/logs
     depends_on:
@@ -283,10 +202,8 @@ services:
   # PROGRESS SERVICE DATABASE
   progress-service-db:
     image: postgres:17.4-alpine
-    environment:
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=progress_service_db
+    env_file: 
+      - ./backend/progress-service/.env
     volumes:
       - ./backend/progress-service/db/init.sql:/docker-entrypoint-initdb.d/init.sql
       - ./backend/progress-service/logs:/var/log/postgresql
@@ -302,19 +219,9 @@ services:
   # PROGRESS SERVICE API
   progress-service-api:
     build: ./backend/progress-service
-    environment:
-      - PORT=${PROGRESS_SERVICE_PORT}
-      - NODE_ENV=${NODE_ENV}
-      - JWT_SECRET=${JWT_SECRET}
-      - JWT_EXPIRY=${JWT_EXPIRY}
-      - DB_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@progress-service-db:5432/progress_service_db?sslmode=disable
-      - AUTH_SERVICE_URL=${AUTH_SERVICE_URL}
-      - PRESENCE_SERVICE_URL=${PRESENCE_SERVICE_URL}
-      - TRAINING_SERVICE_URL=${TRAINING_SERVICE_URL}
-      - ALLOWED_ORIGINS=${ALLOWED_ORIGINS}
-      - LOG_LEVEL=${LOG_LEVEL}
-      - LOG_PATH=${LOG_PATH}
-      - SERVICE_AUTH_KEY=${SERVICE_AUTH_KEY_PROGRESS}
+    env_file:
+      - ./backend/progress-service/.env
+      - .env
     volumes:
       - ./backend/progress-service/logs:/home/appuser/app/logs
     depends_on:
@@ -345,27 +252,13 @@ services:
       
   api-gateway:
       build: ./api-gateway
-      environment:
-        - AUTH_SERVICE_URL=${AUTH_SERVICE_URL}
-        - EMAIL_SERVICE_URL=${EMAIL_SERVICE_URL}
-        - MEETING_SERVICE_URL=${MEETING_SERVICE_URL}
-        - TRAINING_SERVICE_URL=${TRAINING_SERVICE_URL}
-        - ASPIRASI_SERVICE_URL=${ASPIRASI_SERVICE_URL}
-        - PRESENCE_SERVICE_URL=${PRESENCE_SERVICE_URL}
-        - PROGRESS_SERVICE_URL=${PROGRESS_SERVICE_URL}
-        - JWT_SECRET=${JWT_SECRET}
-        - REDIS_URL=${REDIS_URL}
-        - REDIS_PASSWORD=${REDIS_PASSWORD}
-        - PORT=${API_GATEWAY_PORT}
-        - NODE_ENV=${NODE_ENV}
-        - CORS_WHITELIST=${CORS_WHITELIST}
-        - RATE_LIMIT_WINDOW_MS=${RATE_LIMIT_WINDOW_MS}
-        - RATE_LIMIT_MAX_REQUESTS=${RATE_LIMIT_MAX_REQUESTS}
-        - FRONTEND_URL=${FRONTEND_URL}
       ports:
         - "${API_GATEWAY_PORT}:${API_GATEWAY_PORT}"
+      env_file:
+        - .env
+        - ./api-gateway/.env
       volumes:
-        - ./api-gateway/logs:/usr/src/app/logs
+      - ./api-gateway/logs:/usr/src/app/logs
       depends_on:
         redis:
           condition: service_healthy
@@ -373,7 +266,7 @@ services:
         - oti-network
       restart: unless-stopped
       healthcheck:
-        test: ["CMD", "wget", "-qO-", "http://localhost:${API_GATEWAY_PORT}/health/light"]
+        test: ["CMD", "wget", "-qO-", "http://localhost:6969/health/light"]
         interval: 30s
         timeout: 10s
         retries: 3

@@ -13,7 +13,7 @@ export async function GET(req: Request) {
     }
 
     // Fetch presence count from the backend service
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:6969';
     const response = await fetch(`${apiUrl}/api/presence/me/count`, {
       headers: {
         "Content-Type": "application/json",

@@ -43,7 +43,7 @@ export default function PresenceHistoryPage() {
   const fetchPresenceHistory = async () => {
     try {
       const token = getAuthToken();
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:6969';
       const response = await fetch(`${apiUrl}/api/presence/history`, {
         headers: {
           "Authorization": `Bearer ${token}`,
@@ -67,7 +67,7 @@ export default function PresenceHistoryPage() {
   const fetchTrainings = async () => {
     try {
       const token = getAuthToken();
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:6969';
       const response = await fetch(`${apiUrl}/api/trainings/upcoming`, {
         headers: {
           "Authorization": `Bearer ${token}`,

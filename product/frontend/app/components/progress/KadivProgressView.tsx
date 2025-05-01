@@ -18,7 +18,7 @@ interface PendingApproval {
   description: string;
 }
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:6969';
 
 // Simple delay function to prevent rate limiting
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));

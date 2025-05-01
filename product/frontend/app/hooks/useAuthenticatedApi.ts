@@ -1,7 +1,7 @@
 import { useAuth } from '@/context/AuthContext';
 import { getAuthToken } from '@/lib/auth';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:6969';
 const MAX_RETRY_ATTEMPTS = 1; // Limit retries to prevent infinite loops
 
 export const useAuthenticatedApi = () => {

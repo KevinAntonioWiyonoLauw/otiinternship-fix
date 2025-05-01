@@ -89,7 +89,7 @@ export default function ManualPresencePage() {
     if (selectedTraining) {
       const fetchDetailAndUsers = async () => {
         try {
-          const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+          const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:6969';
           const token = getAuthToken();
           const res = await fetch(`${apiUrl}/api/trainings/${selectedTraining}`, {
             headers: {
@@ -164,7 +164,7 @@ export default function ManualPresencePage() {
   const fetchTrainings = async () => {
     try {
       // Get the API URL from environment variable
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:6969';
       
       // Get auth token from auth library
       const token = getAuthToken();
@@ -203,7 +203,7 @@ export default function ManualPresencePage() {
       setSuccessStates(prev => ({ ...prev, [participantId]: false }));
       setErrorStates(prev => ({ ...prev, [participantId]: false }));
       
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:6969';
       const token = getAuthToken();
       const response = await fetch(`${apiUrl}/api/presence/manual`, {
         method: "POST",

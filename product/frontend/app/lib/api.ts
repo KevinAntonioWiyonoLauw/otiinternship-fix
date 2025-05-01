@@ -5,7 +5,7 @@ import { getAuthToken, clearAuthData } from './auth';
 import Cookies from 'js-cookie';
 
 // Use the correct API base URL
-const NEXT_PUBLIC_API_URL = 'http://localhost:8000';
+const NEXT_PUBLIC_API_URL = 'http://localhost:6969';
 const API_TIMEOUT = 15000;
 
 const api = axios.create({
