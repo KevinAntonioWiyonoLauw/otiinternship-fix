@@ -2,10 +2,10 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Logo from './app/components/atoms/Logo';
-import LoginForm from './app/components/molecules/LoginForm';
-import { useAuth } from './app/context/AuthContext';
-import { toast } from './app/hooks/use-toast';
+import Logo from '@/components/atoms/Logo';
+import LoginForm from '@/components/molecules/LoginForm';
+import { useAuth } from '@/context/AuthContext';
+import { toast } from '@/hooks/use-toast';
 
 const LoginPage: React.FC = () => {
   const router = useRouter();
