@@ -58,18 +58,6 @@ The application is built using a modern microservices architecture with the foll
 - Node.js 18 or higher (for local development)
 - PostgreSQL (for local development without Docker)
 
-## 🔧 Development Setup
-
-### Running Services Individually
-
-Each service can be run independently for development:
-
-```bash
-cd backend/[service-name]
-npm install
-npm run dev
-```
-
 ## 📝 API Documentation
 
 Each service exposes RESTful APIs for integration:
